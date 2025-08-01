@@ -1,0 +1,768 @@
+{
+  "TechnicalAnalysis": {
+    "CandleStickPatterns": {
+      "define": "Candlestick patterns are visual representations of price movements on a chart, formed by the open, high, low, and close prices of a specific time period. They help traders identify potential market reversals or continuations based on the shape and position of the candles.",
+      "Bullish": [
+        {
+          "name": "Hammer",
+          "type": "Bullish",
+          "description": "A small body with a long lower wick, indicating potential reversal after a downtrend.",
+          "strategy": "Wait for the hammer to appear after a significant downtrend. Confirm the reversal with a bullish candle closing above the hammer's high on the next candle. Consider entering a long position at the close of the confirmation candle. Place a stop-loss below the hammer’s low, and set take-profit based on recent resistance or a risk/reward ratio like 1:2.",
+          "benefit": "The hammer is a powerful visual signal that sellers tried to push the price lower but failed, and buyers regained control. It helps traders identify potential entry points at the bottom of a trend, reducing the risk of entering too early during a reversal.",
+          "image": "https://robinnayak.github.io/horoscope_host_api/images/hammer.png"
+        },
+        {
+          "name": "Inverted Hammer",
+          "type": "Bullish",
+          "description": "A small body with a long upper wick, indicating potential reversal after a downtrend.",
+          "strategy": "Look for the inverted hammer after a downtrend. Confirm the reversal with a bullish candle closing above the inverted hammer's high on the next candle. Enter a long position at the close of the confirmation candle, placing a stop-loss below the inverted hammer’s low. Set take-profit based on recent resistance or a risk/reward ratio like 1:2.",
+          "benefit": "The inverted hammer suggests that buyers attempted to push the price higher but were met with selling pressure. If followed by a bullish confirmation, it indicates a potential reversal, allowing traders to enter at a lower risk point.",
+          "image": "https://robinnayak.github.io/horoscope_host_api/images/hammer.png"
+        },
+        {
+          "name": "Bullish Engulfing",
+          "type": "Bullish",
+          "description": "A small bearish candle followed by a larger bullish candle that completely engulfs the previous candle's body, indicating a potential reversal.",
+          "strategy": "Wait for a bearish candle to be followed by a larger bullish candle that engulfs it. Enter a long position at the close of the bullish engulfing candle. Place a stop-loss below the low of the engulfing candle and set take-profit based on recent resistance or a risk/reward ratio like 1:2.",
+          "benefit": "The bullish engulfing pattern indicates strong buying pressure, suggesting a potential reversal from a downtrend. It helps traders identify a shift in market sentiment, allowing for timely entries and reduced risk.",
+          "image": "https://robinnayak.github.io/horoscope_host_api/images/hammer.png"
+        },
+        {
+          "name": "Morning Star",
+          "type": "Bullish",
+          "description": "A three-candle pattern consisting of a bearish candle, a small-bodied candle (doji or spinning top), and a bullish candle that closes above the midpoint of the first candle.",
+          "strategy": "Look for a bearish candle followed by a small-bodied candle, then a bullish candle that closes above the midpoint of the first candle. Enter a long position at the close of the bullish candle. Place a stop-loss below the low of the morning star pattern and set take-profit based on recent resistance or a risk/reward ratio like 1:2.",
+          "benefit": "The morning star pattern indicates a potential reversal after a downtrend, with the small-bodied candle showing indecision before buyers take control. It helps traders identify strong reversal points with reduced risk.",
+          "image": "https://robinnayak.github.io/horoscope_host_api/images/hammer.png"
+        },
+        {
+          "name": "Three White Soldiers",
+          "type": "Bullish",
+          "description": "Three consecutive bullish candles with higher closes, indicating strong buying pressure and a potential reversal.",
+          "strategy": "Wait for three consecutive bullish candles with higher closes. Enter a long position at the close of the third candle. Place a stop-loss below the low of the first candle and set take-profit based on recent resistance or a risk/reward ratio like 1:2.",
+          "benefit": "The three white soldiers pattern indicates strong bullish momentum, suggesting a potential reversal from a downtrend. It helps traders identify a sustained buying interest, allowing for timely entries with reduced risk.",
+          "image": "https://robinnayak.github.io/horoscope_host_api/images/hammer.png"
+        },
+        {
+          "name": "Piercing Line",
+          "type": "Bullish",
+          "description": "A two-candle pattern where the first candle is bearish, and the second candle is bullish, closing above the midpoint of the first candle.",
+          "strategy": "Look for a bearish candle followed by a bullish candle that closes above the midpoint of the first candle. Enter a long position at the close of the bullish candle. Place a stop-loss below the low of the piercing line pattern and set take-profit based on recent resistance or a risk/reward ratio like 1:2.",
+          "benefit": "The piercing line pattern indicates a potential reversal after a downtrend, with the bullish candle showing strong buying pressure. It helps traders identify a shift in market sentiment and potential entry points with reduced risk.",
+          "image": "https://robinnayak.github.io/horoscope_host_api/images/hammer.png"
+        },
+        {
+          "name": "Bullish Harami",
+          "type": "Bullish",
+          "description": "A two-candle pattern where a small bullish candle is contained within the body of a larger bearish candle, indicating potential reversal.",
+          "strategy": "Wait for a larger bearish candle followed by a smaller bullish candle that is completely contained within the first candle's body. Enter a long position at the close of the bullish candle. Place a stop-loss below the low of the harami pattern and set take-profit based on recent resistance or a risk/reward ratio like 1:2.",
+          "benefit": "The bullish harami pattern suggests indecision in the market, with buyers potentially gaining strength. It helps traders identify potential reversal points with reduced risk.",
+          "image": "https://robinnayak.github.io/horoscope_host_api/images/hammer.png"
+        },
+        {
+          "name": "Tweezer Bottom",
+          "type": "Bullish",
+          "description": "A two-candle pattern where both candles have the same low, indicating potential reversal after a downtrend.",
+          "strategy": "Look for two consecutive candles with the same low, followed by a bullish candle. Enter a long position at the close of the bullish candle. Place a stop-loss below the low of the tweezer bottom pattern and set take-profit based on recent resistance or a risk/reward ratio like 1:2.",
+          "benefit": "The tweezer bottom pattern indicates strong buying interest at a specific price level, suggesting a potential reversal. It helps traders identify key support levels and potential entry points with reduced risk.",
+          "image": "https://robinnayak.github.io/horoscope_host_api/images/hammer.png"
+        },
+        {
+          "name": "Rising Three Methods",
+          "type": "Bullish",
+          "description": "A five-candle pattern consisting of a bullish candle, followed by three smaller bearish candles, and ending with another bullish candle that closes above the first bullish candle's close.",
+          "strategy": "Wait for a bullish candle followed by three smaller bearish candles, then a bullish candle that closes above the first bullish candle's close. Enter a long position at the close of the last bullish candle. Place a stop-loss below the low of the first bullish candle and set take-profit based on recent resistance or a risk/reward ratio like 1:2.",
+          "benefit": "The rising three methods pattern indicates a strong bullish trend with minor pull backs. It helps traders identify continuation patterns with reduced risk, allowing for entries in the direction of the trend.",
+          "image": "https://robinnayak.github.io/horoscope_host_api/images/hammer.png"
+        },
+        {
+          "name": "Bullish Marubozu",
+          "type": "Bullish",
+          "description": "A single candle with a long body and no wicks, indicating strong buying pressure throughout the session.",
+          "strategy": "Enter a long position at the close of the bullish marubozu candle. Place a stop-loss below the low of the marubozu candle and set take-profit based on recent resistance or a risk/reward ratio like 1:2.",
+          "benefit": "The bullish marubozu indicates strong buying interest with no selling pressure during the session. It helps traders identify strong bullish momentum, allowing for timely entries with reduced risk.",
+          "image": "https://robinnayak.github.io/horoscope_host_api/images/hammer.png"
+        },
+        {
+          "name": "Three Inside Up",
+          "type": "Bullish",
+          "description": "A three-candle pattern where the first candle is bearish, followed by a smaller bullish candle that is contained within the first candle's body, and a third bullish candle that closes above the second candle's high.",
+          "strategy": "Wait for a bearish candle followed by a smaller bullish candle contained within the first candle's body, then a bullish candle that closes above the second candle's high. Enter a long position at the close of the third candle. Place a stop-loss below the low of the first candle and set take-profit based on recent resistance or a risk/reward ratio like 1:2.",
+          "benefit": "The three inside up pattern indicates a potential reversal after a downtrend, with the smaller bullish candle showing indecision before buyers take control. It helps traders identify strong reversal points with reduced risk.",
+          "image": "https://robinnayak.github.io/horoscope_host_api/images/hammer.png"
+        },
+        {
+          "name": "Bullish Kicker",
+          "type": "Bullish",
+          "description": "A two-candle pattern where the first candle is bearish, and the second candle is a large bullish candle that opens above the first candle's close, indicating strong buying pressure.",
+          "strategy": "Look for a bearish candle followed by a large bullish candle that opens above the first candle's close. Enter a long position at the open of the bullish kicker candle. Place a stop-loss below the low of the first candle and set take-profit based on recent resistance or a risk/reward ratio like 1:2.",
+          "benefit": "The bullish kicker pattern indicates strong buying interest and a potential reversal from a downtrend. It helps traders identify key entry points with reduced risk.",
+          "image": "https://robinnayak.github.io/horoscope_host_api/images/hammer.png"
+        },
+        {
+          "name": "Dragonfly Doji",
+          "type": "Bullish",
+          "description": "A doji candle with a long lower wick and no upper wick, indicating potential reversal after a downtrend.",
+          "strategy": "Look for a dragonfly doji after a downtrend. Confirm the reversal with a bullish candle closing above the dragonfly doji's high on the next candle. Enter a long position at the close of the confirmation candle. Place a stop-loss below the dragonfly doji’s low and set take-profit based on recent resistance or a risk/reward ratio like 1:2.",
+          "benefit": "The dragonfly doji suggests that sellers tried to push the price lower but failed, and buyers regained control. If followed by a bullish confirmation, it indicates a potential reversal, allowing traders to enter at a lower risk point.",
+          "image": "https://robinnayak.github.io/horoscope_host_api/images/hammer.png"
+        },
+        {
+          "name": "Bullish Abandoned Baby",
+          "type": "Bullish",
+          "description": "A three-candle pattern where the first candle is bearish, the second candle is a doji that gaps down, and the third candle is bullish that gaps up, indicating strong buying pressure.",
+          "strategy": "Wait for a bearish candle followed by a doji that gaps down, then a bullish candle that gaps up. Enter a long position at the open of the bullish candle. Place a stop-loss below the low of the first candle and set take-profit based on recent resistance or a risk/reward ratio like 1:2.",
+          "benefit": "The bullish abandoned baby pattern indicates strong buying interest after a downtrend, with the doji showing indecision before buyers take control. It helps traders identify key reversal points with reduced risk.",
+          "image": "https://robinnayak.github.io/horoscope_host_api/images/hammer.png"
+        },
+        {
+          "name": "Morning Doji Star",
+          "type": "Bullish",
+          "description": "A three-candle pattern consisting of a bearish candle, a doji candle, and a bullish candle that closes above the midpoint of the first candle.",
+          "strategy": "Look for a bearish candle followed by a doji candle, then a bullish candle that closes above the midpoint of the first candle. Enter a long position at the close of the bullish candle. Place a stop-loss below the low of the morning doji star pattern and set take-profit based on recent resistance or a risk/reward ratio like 1:2.",
+          "benefit": "The morning doji star pattern indicates a potential reversal after a downtrend, with the doji showing indecision before buyers take control. It helps traders identify strong reversal points with reduced risk.",
+          "image": "https://robinnayak.github.io/horoscope_host_api/images/hammer.png"
+        }
+      ],
+      "Bearish": [
+        {
+          "name": "Shooting Star",
+          "type": "Bearish",
+          "description": "A small body with a long upper wick, indicating potential reversal after an uptrend.",
+          "strategy": "Wait for the shooting star to appear after a significant uptrend. Confirm with a bearish candle closing below the shooting star's low. Enter a short position after confirmation. Place stop-loss above the high of the pattern and set take-profit at the next support level.",
+          "benefit": "Helps traders spot potential tops by showing that bulls lost control after a push higher.",
+          "image": "https://robinnayak.github.io/horoscope_host_api/images/hammer.png"
+        },
+        {
+          "name": "Hanging Man",
+          "type": "Bearish",
+          "description": "Looks like a hammer but appears after an uptrend, signaling potential bearish reversal.",
+          "strategy": "Wait for a hanging man after an uptrend. Confirm with a bearish close below the hanging man’s low. Enter short with a stop-loss above the pattern and take-profit at recent support.",
+          "benefit": "Warns of weakness in an uptrend and potential trend reversal.",
+          "image": "https://robinnayak.github.io/horoscope_host_api/images/hammer.png"
+        },
+        {
+          "name": "Bearish Engulfing",
+          "type": "Bearish",
+          "description": "A large red candle completely engulfs the previous green candle, signaling strong selling pressure.",
+          "strategy": "Look for the engulfing candle after an uptrend. Enter short on close or next candle. Stop-loss above the high of the pattern; take-profit based on support or fixed risk-reward.",
+          "benefit": "Shows a sudden shift from buying to selling, signaling trend exhaustion.",
+          "image": "https://robinnayak.github.io/horoscope_host_api/images/hammer.png"
+        },
+        {
+          "name": "Evening Star",
+          "type": "Bearish",
+          "description": "A three-candle reversal pattern forming at the top of an uptrend.",
+          "strategy": "Wait for the three parts: a bullish candle, a small-bodied candle (indecision), then a bearish candle closing below midpoint of the first. Enter short after confirmation. Stop-loss above the high of the pattern.",
+          "benefit": "Visually clear pattern warning of trend reversal with strong confirmation.",
+          "image": "https://robinnayak.github.io/horoscope_host_api/images/hammer.png"
+        },
+        {
+          "name": "Three Black Crows",
+          "type": "Bearish",
+          "description": "Three long red candles in succession, each opening within the previous candle’s body and closing lower.",
+          "strategy": "Enter short after the third candle closes. Place stop-loss above the first candle’s high, and target support zones.",
+          "benefit": "Indicates consistent selling pressure and a shift in sentiment.",
+          "image": "https://robinnayak.github.io/horoscope_host_api/images/hammer.png"
+        },
+        {
+          "name": "Dark Cloud Cover",
+          "type": "Bearish",
+          "description": "A red candle opens above and closes into the prior green candle’s body, showing a bearish takeover.",
+          "strategy": "Enter short when price closes below the midpoint of the first green candle. Use stop-loss above the pattern’s high.",
+          "benefit": "Shows early signs of a shift in control from bulls to bears.",
+          "image": "https://robinnayak.github.io/horoscope_host_api/images/hammer.png"
+        },
+        {
+          "name": "Bearish Harami",
+          "type": "Bearish",
+          "description": "A large green candle followed by a smaller red candle within its body, indicating weakening momentum.",
+          "strategy": "Wait for confirmation with a close below the red candle. Enter short, with stop-loss above the pattern.",
+          "benefit": "Signals indecision or hesitation after an uptrend.",
+          "image": "https://robinnayak.github.io/horoscope_host_api/images/hammer.png"
+        },
+        {
+          "name": "Tweezer Tops",
+          "type": "Bearish",
+          "description": "Two candles with nearly identical highs, suggesting a resistance level is holding.",
+          "strategy": "Enter short if the second candle is bearish and closes below previous support. Stop-loss just above the tweezers.",
+          "benefit": "Shows price rejection at a common resistance level.",
+          "image": "https://robinnayak.github.io/horoscope_host_api/images/hammer.png"
+        },
+        {
+          "name": "Falling Three Methods",
+          "type": "Bearish",
+          "description": "A large red candle followed by small rising candles, then another strong red candle.",
+          "strategy": "Enter short after the last bearish candle confirms continuation. Stop-loss above the small consolidation candles.",
+          "benefit": "Confirms continuation of bearish momentum after brief consolidation.",
+          "image": "https://robinnayak.github.io/horoscope_host_api/images/hammer.png"
+        },
+        {
+          "name": "Bearish Marubozu",
+          "type": "Bearish",
+          "description": "A long red candle with no wicks, indicating full bearish control during that period.",
+          "strategy": "Trade in the direction of the Marubozu with a stop above the candle's high. Best used in trend continuation setups.",
+          "benefit": "Very strong sign of bearish conviction.",
+          "image": "https://robinnayak.github.io/horoscope_host_api/images/hammer.png"
+        },
+        {
+          "name": "Three Inside Down",
+          "type": "Bearish",
+          "description": "A small red candle fits inside a large green one, followed by another bearish candle confirming reversal.",
+          "strategy": "Wait for the third candle to break below the first green candle. Enter short with stop-loss above pattern high.",
+          "benefit": "Shows transition from bullish to bearish in three distinct steps.",
+          "image": "https://robinnayak.github.io/horoscope_host_api/images/hammer.png"
+        },
+        {
+          "name": "Bearish Kicker",
+          "type": "Bearish",
+          "description": "A strong bearish candle opens with a gap down after a green candle, showing a dramatic sentiment shift.",
+          "strategy": "Enter short on the kicker close. Stop-loss above the gap. Look for high volume confirmation.",
+          "benefit": "One of the strongest reversal patterns, signaling rapid shift to bearish sentiment.",
+          "image": "https://robinnayak.github.io/horoscope_host_api/images/hammer.png"
+        },
+        {
+          "name": "Gravestone Doji",
+          "type": "Bearish",
+          "description": "Opens and closes near the low with a long upper shadow, indicating rejection at higher prices.",
+          "strategy": "Use with confirmation — enter short if the next candle closes lower. Stop-loss above the wick.",
+          "benefit": "Highlights failed bullish attempts and signals reversal potential.",
+          "image": "https://robinnayak.github.io/horoscope_host_api/images/hammer.png"
+        },
+        {
+          "name": "Bearish Abandoned Baby",
+          "type": "Bearish",
+          "description": "A gap-up doji followed by a gap-down bearish candle — a rare but strong reversal signal.",
+          "strategy": "Enter short on the bearish candle. Stop-loss above the doji. Use on higher timeframes for reliability.",
+          "benefit": "Very strong signal of buyer exhaustion and bearish dominance.",
+          "image": "https://robinnayak.github.io/horoscope_host_api/images/hammer.png"
+        },
+        {
+          "name": "Evening Doji Star",
+          "type": "Bearish",
+          "description": "A variation of the Evening Star with a doji as the second candle, signaling hesitation and reversal.",
+          "strategy": "Enter short after the third candle confirms. Stop-loss above the high of the pattern.",
+          "benefit": "Combination of indecision (doji) and reversal (bearish close) gives this pattern strong significance.",
+          "image": "https://robinnayak.github.io/horoscope_host_api/images/hammer.png"
+        }
+      ],
+      "Neutral": [
+        {
+          "name": "Doji",
+          "type": "Neutral",
+          "description": "A candle with a very small body, indicating indecision in the market.",
+          "strategy": "Wait for confirmation from the next candle. If bullish, consider a long position; if bearish, consider a short position. Place stop-loss based on the recent high/low.",
+          "benefit": "Indicates market indecision, which can lead to reversals or continuations depending on the next candle's action.",
+          "image": "https://robinnayak.github.io/horoscope_host_api/images/hammer.png"
+        },
+        {
+          "name": "Spinning Top",
+          "type": "Neutral",
+          "description": "A candle with a small body and long wicks on both sides, indicating indecision.",
+          "strategy": "Wait for the next candle to confirm direction. Enter long or short based on confirmation. Place stop-loss based on the recent high/low.",
+          "benefit": "Shows market indecision, which can lead to potential reversals or continuations depending on subsequent price action.",
+          "image": "https://robinnayak.github.io/horoscope_host_api/images/hammer.png"
+        }
+      ]
+    },
+    "ChartPatterns": {
+      "define": "Chart patterns are formations created by the movement of price on a chart, which can indicate potential future price movements. They are used by traders to identify trends, reversals, and continuation patterns in the market.",
+      "Bullish": [
+        {
+          "name": "Double Bottom",
+          "type": "Bullish",
+          "description": "A reversal pattern formed by two consecutive lows at approximately the same price level, indicating strong support.",
+          "strategy": "Wait for the second bottom to form and price to break the neckline (resistance between the two bottoms). Enter long after breakout confirmation. Stop-loss below the second bottom.",
+          "benefit": "Identifies strong buying pressure at a support level and signals a potential trend reversal upward.",
+          "image": "https://robinnayak.github.io/horoscope_host_api/images/hammer.png"
+        },
+        {
+          "name": "Cup and Handle",
+          "type": "Bullish",
+          "description": "A continuation pattern that resembles a 'U' shape followed by a small downward drift (handle) before a breakout.",
+          "strategy": "Enter long after the price breaks out above the handle resistance. Stop-loss below the handle's low.",
+          "benefit": "Helps catch breakout opportunities with high reward potential after consolidation.",
+          "image": "https://robinnayak.github.io/horoscope_host_api/images/hammer.png"
+        },
+        {
+          "name": "Ascending Triangle",
+          "type": "Bullish",
+          "description": "A pattern with a flat upper resistance and rising lows, indicating increasing buying pressure.",
+          "strategy": "Buy the breakout above resistance. Use stop-loss below the most recent swing low inside the triangle.",
+          "benefit": "Often seen during uptrends, providing strong continuation signals.",
+          "image": "https://robinnayak.github.io/horoscope_host_api/images/hammer.png"
+        },
+        {
+          "name": "Bullish Flag",
+          "type": "Bullish",
+          "description": "A small downward-sloping channel that forms after a strong upward price move.",
+          "strategy": "Enter long after price breaks above the flag's upper boundary. Place stop-loss below the flag.",
+          "benefit": "Represents a brief consolidation before continuation of the prevailing bullish trend.",
+          "image": "https://robinnayak.github.io/horoscope_host_api/images/hammer.png"
+        }
+      ],
+      "Bearish": [
+        {
+          "name": "Double Top",
+          "type": "Bearish",
+          "description": "A reversal pattern formed by two consecutive highs near the same level, indicating strong resistance.",
+          "strategy": "Sell after price breaks below the neckline (support between the two tops). Stop-loss above the second top.",
+          "benefit": "Helps identify reversal points after a sustained uptrend.",
+          "image": "https://robinnayak.github.io/horoscope_host_api/images/hammer.png"
+        },
+        {
+          "name": "Head and Shoulders",
+          "type": "Bearish",
+          "description": "A reversal pattern with three peaks: a higher peak (head) between two lower peaks (shoulders).",
+          "strategy": "Enter short after price breaks below the neckline. Stop-loss above the right shoulder.",
+          "benefit": "Widely trusted for spotting trend reversals at market tops.",
+          "image": "https://robinnayak.github.io/horoscope_host_api/images/hammer.png"
+        },
+        {
+          "name": "Descending Triangle",
+          "type": "Bearish",
+          "description": "A pattern with a flat support level and descending highs, suggesting sellers are gaining control.",
+          "strategy": "Sell after price breaks below support. Place stop-loss above the last lower high inside the triangle.",
+          "benefit": "Strong bearish continuation pattern often forming during downtrends.",
+          "image": "https://robinnayak.github.io/horoscope_host_api/images/hammer.png"
+        },
+        {
+          "name": "Bearish Flag",
+          "type": "Bearish",
+          "description": "A small upward-sloping channel formed after a sharp decline in price.",
+          "strategy": "Enter short after a breakdown below the flag's lower boundary. Stop-loss above the flag.",
+          "benefit": "Offers entry points for continuing short trades after a pause in a downtrend.",
+          "image": "https://robinnayak.github.io/horoscope_host_api/images/hammer.png"
+        }
+      ],
+      "Neutral": [
+        {
+          "name": "Symmetrical Triangle",
+          "type": "Neutral",
+          "description": "A converging pattern formed by lower highs and higher lows, indicating price consolidation before breakout.",
+          "strategy": "Wait for breakout in either direction. Enter long or short depending on breakout. Use stop-loss just outside the opposite trendline.",
+          "benefit": "Helps catch strong breakouts in trending markets with defined risk.",
+          "image": "https://robinnayak.github.io/horoscope_host_api/images/hammer.png"
+        },
+        {
+          "name": "Rectangle Pattern",
+          "type": "Neutral",
+          "description": "A range-bound pattern where price moves horizontally between support and resistance.",
+          "strategy": "Trade the breakout in either direction. Alternatively, trade the range by buying support and selling resistance until a breakout occurs.",
+          "benefit": "Easy to recognize and trade; provides breakout and range-trading opportunities.",
+          "image": "https://robinnayak.github.io/horoscope_host_api/images/hammer.png"
+        },
+        {
+          "name": "Wedge Pattern",
+          "type": "Neutral",
+          "description": "A converging pattern that slants either up or down. Can result in breakouts in either direction depending on trend context.",
+          "strategy": "Trade after breakout confirmation. Use volume or trend direction for bias. Stop-loss beyond wedge boundary.",
+          "benefit": "Often signals a breakout after a period of price compression.",
+          "image": "https://robinnayak.github.io/horoscope_host_api/images/hammer.png"
+        }
+      ]
+    },
+    "TrendIndicators": {
+      "define": "Trend indicators are technical analysis tools used to identify the direction and strength of a market trend. They help traders determine whether to enter long or short positions based on prevailing market conditions.",
+
+      "indicators": [
+        {
+          "name": "Moving Average (MA)",
+          "type": "Trend",
+          "description": "Smooths price data to identify the direction of the current trend over a specific period.",
+          "strategy": "Use a 50-period MA for short-term trends and a 200-period MA for long-term. Buy when price is above MA; sell when below.",
+          "benefit": "Helps traders filter out market noise and spot trend direction clearly.",
+          "image": "https://robinnayak.github.io/horoscope_host_api/images/hammer.png"
+        },
+        {
+          "name": "Exponential Moving Average (EMA)",
+          "type": "Trend",
+          "description": "A weighted moving average that reacts more quickly to recent price changes.",
+          "strategy": "Popular strategy: Buy when 9 EMA crosses above 21 EMA (bullish crossover), and sell when 9 EMA crosses below 21 EMA.",
+          "benefit": "More responsive than a simple MA, useful for faster trend detection.",
+          "image": "https://robinnayak.github.io/horoscope_host_api/images/hammer.png"
+        },
+        {
+          "name": "Moving Average Convergence Divergence (MACD)",
+          "type": "Trend",
+          "description": "Shows the relationship between two EMAs (usually 12 and 26), with a signal line to identify crossovers.",
+          "strategy": "Buy when MACD line crosses above the signal line; sell when it crosses below. Divergences can also indicate reversals.",
+          "benefit": "Combines momentum and trend-following signals in one indicator.",
+          "image": "https://robinnayak.github.io/horoscope_host_api/images/hammer.png"
+        },
+        {
+          "name": "Average Directional Index (ADX)",
+          "type": "Trend",
+          "description": "Measures the strength of a trend without indicating direction. Readings above 25 signal a strong trend.",
+          "strategy": "Use ADX > 25 to trade trend strategies (e.g., moving averages); avoid trend trading when ADX < 20.",
+          "benefit": "Helps avoid sideways markets and focus only when trend strength is high.",
+          "image": "https://robinnayak.github.io/horoscope_host_api/images/hammer.png"
+        },
+        {
+          "name": "Ichimoku Cloud",
+          "type": "Trend",
+          "description": "A comprehensive indicator showing trend direction, support/resistance, and momentum.",
+          "strategy": "Buy when price is above the cloud and Tenkan-sen crosses above Kijun-sen. Sell when price is below the cloud.",
+          "benefit": "Provides a full market view in a single glance, used by professionals.",
+          "image": "https://robinnayak.github.io/horoscope_host_api/images/hammer.png"
+        },
+        {
+          "name": "Parabolic SAR",
+          "type": "Trend",
+          "description": "Plots dots above or below the price to indicate the direction of the trend and possible reversal points.",
+          "strategy": "Buy when dots switch below the price; sell when they switch above. Often used with other indicators for confirmation.",
+          "benefit": "Visually intuitive and useful for setting trailing stop-loss levels.",
+          "image": "https://robinnayak.github.io/horoscope_host_api/images/hammer.png"
+        }
+      ]
+    },
+    "MomentumIndicators": {
+      "define": "Momentum indicators measure the speed or strength of price movements, helping traders identify overbought or oversold conditions. They are used to confirm trends and potential reversals by analyzing the rate of price change over time.",
+      "indicators": [
+        {
+          "name": "RSI (Relative Strength Index)",
+          "type": "Momentum",
+          "description": "RSI measures the speed and change of price movements. It oscillates between 0 and 100 and is commonly used to identify overbought and oversold conditions.",
+          "strategy": "Look for RSI above 70 to signal overbought conditions (potential reversal down), and below 30 for oversold (potential reversal up). RSI divergences (when price moves in the opposite direction of RSI) can also signal reversals.",
+          "benefit": "RSI helps traders identify potential reversal points with clarity, especially in ranging markets. It’s also useful to detect hidden momentum and trend strength.",
+          "image": "https://robinnayak.github.io/horoscope_host_api/images/hammer.png"
+        },
+        {
+          "name": "Stochastic Oscillator",
+          "type": "Momentum",
+          "description": "The Stochastic Oscillator compares a particular closing price of a security to a range of its prices over a certain period. It consists of two lines: %K and %D.",
+          "strategy": "Buy when %K crosses above %D in the oversold region (<20), and sell when %K crosses below %D in the overbought region (>80). Divergences with price can strengthen reversal signals.",
+          "benefit": "Useful for identifying potential turning points in the market with more sensitivity than RSI, especially in choppy markets.",
+          "image": "https://robinnayak.github.io/horoscope_host_api/images/hammer.png"
+        },
+        {
+          "name": "MACD (Moving Average Convergence Divergence)",
+          "type": "Momentum",
+          "description": "MACD is a trend-following momentum indicator that shows the relationship between two moving averages of a security’s price.",
+          "strategy": "Watch for MACD line crossing above the signal line for bullish signals and below for bearish. MACD histogram helps visualize momentum shifts. MACD divergence with price may suggest trend reversal.",
+          "benefit": "Combines trend and momentum in one view, making it a versatile tool for spotting trend changes and strength.",
+          "image": "https://robinnayak.github.io/horoscope_host_api/images/hammer.png"
+        }
+      ],
+
+      "VolumeIndicators": [
+        {
+          "name": "Volume Bars",
+          "type": "Volume",
+          "description": "Basic volume bars show how much of an asset is traded during a particular period.",
+          "strategy": "Use rising volume during price increases to confirm a strong uptrend. Falling volume may signal weakening momentum or potential reversals.",
+          "benefit": "Volume confirms price movements and adds conviction to trade setups. High volume often precedes significant price moves.",
+          "image": "https://robinnayak.github.io/horoscope_host_api/images/hammer.png"
+        },
+        {
+          "name": "On-Balance Volume (OBV)",
+          "type": "Volume",
+          "description": "OBV uses volume flow to predict changes in stock price. It adds volume on up days and subtracts on down days.",
+          "strategy": "Use OBV to confirm trends: if OBV is rising with price, it confirms strength. If OBV diverges from price, it can signal a possible reversal.",
+          "benefit": "Helps anticipate price movements based on volume accumulation or distribution, even before it appears in price charts.",
+          "image": "https://robinnayak.github.io/horoscope_host_api/images/hammer.png"
+        },
+        {
+          "name": "VWAP (Volume Weighted Average Price)",
+          "type": "Volume",
+          "description": "VWAP gives the average price a security has traded at throughout the day, based on both volume and price.",
+          "strategy": "Traders look for price crossing above VWAP for bullish bias and below for bearish. It is often used as a dynamic support/resistance by institutional traders.",
+          "benefit": "VWAP is a key institutional benchmark for fair value trading and helps measure buying/selling efficiency.",
+          "image": "https://robinnayak.github.io/horoscope_host_api/images/hammer.png"
+        }
+      ]
+    },
+    "VolatilityIndicators": {
+      "define": "Volatility indicators measure the rate of price fluctuations in a market. They help traders assess the level of risk and potential price movement, allowing for better risk management and trade planning.",
+      "indicators": [
+        {
+          "name": "Bollinger Bands",
+          "type": "Volatility",
+          "description": "Bollinger Bands consist of a moving average with two standard deviation lines above and below it, dynamically adjusting to price volatility.",
+          "strategy": "Price touching the upper band may indicate overbought conditions, while the lower band may suggest oversold. A squeeze (bands contracting) often precedes a breakout. Use in combination with RSI or MACD for confirmation.",
+          "benefit": "Helps identify volatility expansion and potential breakout zones. Useful for spotting reversal or continuation signals during periods of price consolidation.",
+          "image": "https://robinnayak.github.io/horoscope_host_api/images/hammer.png"
+        },
+        {
+          "name": "Average True Range (ATR)",
+          "type": "Volatility",
+          "description": "ATR measures market volatility by calculating the average range between high and low over a given period. It does not indicate trend direction, only magnitude.",
+          "strategy": "Higher ATR values suggest greater volatility, lower values indicate stability. Use ATR to set stop-loss distance or assess risk levels. Combine with trend indicators to filter trades.",
+          "benefit": "Essential for risk management and position sizing. Helps adapt strategy based on current market volatility.",
+          "image": "https://robinnayak.github.io/horoscope_host_api/images/hammer.png"
+        },
+        {
+          "name": "Donchian Channels",
+          "type": "Volatility",
+          "description": "Donchian Channels plot the highest high and lowest low over a user-defined period, creating a volatility-based price envelope.",
+          "strategy": "Buy when price breaks above the upper channel, and sell when it breaks below the lower. Use it in trend-following systems or breakout strategies.",
+          "benefit": "Visually clean indicator that helps identify breakout opportunities and high/low extremes. Often used in trend-following systems.",
+          "image": "https://robinnayak.github.io/horoscope_host_api/images/hammer.png"
+        },
+        {
+          "name": "Keltner Channel",
+          "type": "Volatility",
+          "description": "Keltner Channels are based on an EMA with upper and lower bands set by ATR values, creating a volatility-adjusted envelope.",
+          "strategy": "Look for price breakout above or below the channels to signal potential entries. Less volatile than Bollinger Bands, making it ideal for smoother signals.",
+          "benefit": "Reduces noise compared to Bollinger Bands, and adapts well to trending markets. Good for spotting sustained breakouts.",
+          "image": "https://robinnayak.github.io/horoscope_host_api/images/hammer.png"
+        }
+      ]
+    },
+    "TradingTools": {
+      "define": "Trading tools are software applications or platforms that assist traders in analyzing markets, executing trades, and managing their portfolios. They provide features such as charting, technical analysis, backtesting, and trade execution to enhance trading efficiency and decision-making.",
+      "tools": [
+        {
+          "name": "Fibonacci Retracement",
+          "type": "Support/Resistance Tool",
+          "description": "Fibonacci levels are horizontal lines that indicate potential support and resistance levels based on key Fibonacci ratios (23.6%, 38.2%, 50%, 61.8%, 78.6%).",
+          "strategy": "Draw from swing high to swing low in a downtrend (and vice versa in an uptrend). Watch how price reacts at key levels like 38.2%, 50%, or 61.8% for entries or exits.",
+          "benefit": "Widely used by traders to anticipate price corrections within trends. Great for timing pullbacks or taking profits.",
+          "image": "https://robinnayak.github.io/horoscope_host_api/images/hammer.png"
+        },
+        {
+          "name": "Pivot Points",
+          "type": "Support/Resistance Tool",
+          "description": "Pivot Points are calculated from the previous period's high, low, and close to identify future intraday support and resistance levels.",
+          "strategy": "Use pivot levels (P, S1, S2, R1, R2) for entry/exit zones. Price trading above the pivot suggests bullish sentiment; below indicates bearishness.",
+          "benefit": "Useful for intraday trading and setting predefined zones for stops, targets, and reversals.",
+          "image": "https://robinnayak.github.io/horoscope_host_api/images/hammer.png"
+        },
+        {
+          "name": "Trend Lines",
+          "type": "Charting Tool",
+          "description": "Trend lines are drawn manually to connect higher lows in an uptrend or lower highs in a downtrend.",
+          "strategy": "Use trend lines to identify dynamic support/resistance and potential breakout zones. A break of a well-established trend line may signal a trend reversal.",
+          "benefit": "Visually clarifies the trend direction and gives early signals of trend exhaustion or reversal.",
+          "image": "https://robinnayak.github.io/horoscope_host_api/images/hammer.png"
+        },
+        {
+          "name": "Support & Resistance Zones",
+          "type": "Price Action Tool",
+          "description": "Horizontal areas where price repeatedly reacts, forming psychological support (floor) or resistance (ceiling) levels.",
+          "strategy": "Mark levels where price has previously bounced or reversed. Enter near support in uptrends and sell near resistance in downtrends.",
+          "benefit": "Core concept of price action trading. Helps in placing precise entries, stop-losses, and take-profits.",
+          "image": "https://robinnayak.github.io/horoscope_host_api/images/hammer.png"
+        },
+        {
+          "name": "Chart Patterns",
+          "type": "Technical Tool",
+          "description": "Patterns like Head & Shoulders, Double Tops/Bottoms, Flags, and Wedges signal potential trend continuation or reversal.",
+          "strategy": "Identify the pattern and wait for a breakout or breakdown confirmation. Place stop-losses beyond the pattern boundary.",
+          "benefit": "Gives early signals of trend shifts and possible strong moves. Common among institutional traders.",
+          "image": "https://robinnayak.github.io/horoscope_host_api/images/hammer.png"
+        },
+        {
+          "name": "Volume Profile",
+          "type": "Market Structure Tool",
+          "description": "Displays the volume traded at each price level to identify areas of high interest (high volume nodes) and low liquidity (low volume nodes).",
+          "strategy": "Use high volume areas as potential support/resistance and low volume gaps as fast-move zones. Combine with price action.",
+          "benefit": "Shows what price levels matter most to market participants — crucial for institutional-level analysis.",
+          "image": "https://robinnayak.github.io/horoscope_host_api/images/hammer.png"
+        },
+        {
+          "name": "VWAP (Volume Weighted Average Price)",
+          "type": "Institutional Tool",
+          "description": "VWAP is the average price a security has traded at throughout the day, based on both volume and price.",
+          "strategy": "Price above VWAP suggests bullish control, and below indicates bearish pressure. Used for mean-reversion or breakout trades.",
+          "benefit": "Widely used by institutional traders. Helps avoid chasing price and improves entry precision.",
+          "image": "https://robinnayak.github.io/horoscope_host_api/images/hammer.png"
+        },
+        {
+          "name": "Gann Fan",
+          "type": "Time/Price Tool",
+          "description": "Gann Fans are diagonal lines based on angles that indicate key support/resistance zones based on time and price.",
+          "strategy": "Use the 1x1 angle (45°) as a central balance line. Breaks of specific angles suggest trend shifts.",
+          "benefit": "Combines geometry, time, and price for forecasting. Useful in long-term swing trading.",
+          "image": "https://robinnayak.github.io/horoscope_host_api/images/hammer.png"
+        }
+      ]
+    }
+  },
+  "PriceAction": {
+    "define": "Price action trading focuses on analyzing historical price movements to make trading decisions, without relying on indicators. It emphasizes understanding market structure, trends, and patterns to identify potential entry and exit points.",
+    "Bullish": [
+      {
+        "name": "Breakouts & Retests",
+        "type": "Bullish",
+        "description": "A breakout occurs when price moves above a significant resistance level, often followed by a retest of that level as new support.",
+        "strategy": "Enter long on the breakout above resistance. If price retests the broken resistance and holds, enter long again. Use stop loss below the breakout point or retest low.",
+        "benefit": "Breakouts signal strong buying interest, and retests confirm the strength of the new support level, providing a safer entry point.",
+        "image": "https://robinnayak.github.io/horoscope_host_api/images/hammer.png"
+      },
+      {
+        "name": "Key Levels & Demand ZOnes",
+        "type": "Bullish",
+        "description": "Key levels are horizontal support or resistance areas where price has previously reacted. Demand zones are areas where buying interest is strong enough to push prices higher.",
+        "strategy": "Identify key support levels where price has bounced previously. Enter long when price approaches these levels, confirming with bullish price action (e.g., pin bars, engulfing candles). Use stop-loss below the key level.",
+        "benefit": "Trading near key levels allows for high-probability entries with defined risk. Demand zones indicate strong buying interest, increasing the likelihood of a price bounce.",
+        "image": "https://robinnayak.github.io/horoscope_host_api/images/hammer.png"
+      },
+      {
+        "name": "Trend Continuation",
+        "type": "Bullish",
+        "description": "Trading in the direction of the prevailing trend, looking for pullbacks to enter long positions.",
+        "strategy": "Identify the overall trend direction (higher highs and higher lows). Enter long on pullbacks to key support levels or moving averages. Use stop-loss below the recent swing low.",
+        "benefit": "Trend continuation trades align with market momentum, increasing the probability of successful trades.",
+        "image": "https://robinnayak.github.io/horoscope_host_api/images/hammer.png"
+      },
+      {
+        "name": "Bullish Reversal Patterns",
+        "type": "Bullish",
+        "description": "Patterns that indicate a potential reversal from a downtrend to an uptrend, such as double bottoms or inverse head and shoulders.",
+        "strategy": "Wait for confirmation of the reversal pattern (e.g., break above neckline). Enter long after confirmation. Use stop-loss below the pattern's low.",
+        "benefit": "Reversal patterns provide opportunities to enter early in a new uptrend, maximizing profit potential.",
+        "image": "https://robinnayak.github.io/horoscope_host_api/images/hammer.png"
+      }
+    ],
+    "Bearish": [
+      {
+        "name": "Breakouts & Retests",
+        "type": "Bearish",
+        "description": "A breakout occurs when price moves below a significant support level, often followed by a retest of that level as new resistance.",
+        "strategy": "Enter short on the breakout below support. If price retests the broken support and holds, enter short again. Use stop loss above the breakout point or retest high.",
+        "benefit": "Breakouts signal strong selling interest, and retests confirm the strength of the new resistance level, providing a safer exit point.",
+        "image": "https://robinnayak.github.io/horoscope_host_api/images/hammer.png"
+      },
+      {
+        "name": "Key Levels & Supply Zones",
+        "type": "Bearish",
+        "description": "Key levels are horizontal support or resistance areas where price has previously reacted. Supply zones are areas where selling interest is strong enough to push prices lower.",
+        "strategy": "Identify key resistance levels where price has reversed previously. Enter short when price approaches these levels, confirming with bearish price action (e.g., pin bars, engulfing candles). Use stop-loss above the key level.",
+        "benefit": "Trading near key levels allows for high-probability entries with defined risk. Supply zones indicate strong selling interest, increasing the likelihood of a price drop.",
+        "image": "https://robinnayak.github.io/horoscope_host_api/images/hammer.png"
+      },
+      {
+        "name": "Trend Continuation",
+        "type": "Bearish",
+        "description": "Trading in the direction of the prevailing trend, looking for pullbacks to enter short positions.",
+        "strategy": "Identify the overall trend direction (lower highs and lower lows). Enter short on pullbacks to key resistance levels or moving averages. Use stop-loss above the recent swing high.",
+        "benefit": "Trend continuation trades align with market momentum, increasing the probability of successful trades.",
+        "image": "https://robinnayak.github.io/horoscope_host_api/images/hammer.png"
+      },
+      {
+        "name": "Bearish Reversal Patterns",
+        "type": "Bearish",
+        "description": "Patterns that indicate a potential reversal from an uptrend to a downtrend, such as double tops or head and shoulders.",
+        "strategy": "Wait for confirmation of the reversal pattern (e.g., break below neckline). Enter short after confirmation. Use stop-loss above the pattern's high.",
+        "benefit": "Reversal patterns provide opportunities to enter early in a new downtrend, maximizing profit potential.",
+        "image": "https://robinnayak.github.io/horoscope_host_api/images/hammer.png"
+      }
+    ],
+    "Neutral": [
+      {
+        "name": "Price Action Candlestick Patterns",
+        "type": "Neutral",
+        "description": "Candlestick patterns that indicate indecision or potential reversals, such as dojis or spinning tops.",
+        "strategy": "Look for patterns that signal indecision (e.g., doji, spinning top). Wait for confirmation from the next candle before entering a trade. Use stop-loss based on the recent high/low.",
+        "benefit": "Candlestick patterns provide visual cues of market sentiment and can indicate potential reversals or continuations.",
+        "image": "https://robinnayak.github.io/horoscope_host_api/images/hammer.png"
+      },
+      {
+        "name": "Range Trading",
+        "type": "Neutral",
+        "description": "Trading within a defined price range, buying at support and selling at resistance.",
+        "strategy": "Identify key support and resistance levels. Buy near support and sell near resistance. Use stop-loss below support for longs and above resistance for shorts.",
+        "benefit": "Range trading allows for consistent profits in sideways markets with clear entry and exit points.",
+        "image": "https://robinnayak.github.io/horoscope_host_api/images/hammer.png"
+      },
+      {
+        "name": "Consolidation Breakouts",
+        "type": "Neutral",
+        "description": "Price consolidates in a tight range before breaking out in either direction.",
+        "strategy": "Wait for a breakout above or below the consolidation range. Enter long on bullish breakout or short on bearish breakout. Use stop-loss just outside the consolidation zone.",
+        "benefit": "Breakouts from consolidation often lead to strong price moves, providing good risk-reward opportunities.",
+        "image": "https://robinnayak.github.io/horoscope_host_api/images/hammer.png"
+      }
+    ]
+  },
+  "TradingStrategies": {
+    "define": "Trading strategies are systematic approaches to trading that outline how to enter and exit trades based on specific criteria. They can be based on technical analysis, fundamental analysis, or a combination of both. Effective strategies help traders manage risk, identify opportunities, and make informed decisions in the market.",
+    "Strategies": [{
+      "name": "Scalping",
+      "type": "Short-Term",
+      "define": "Scalping is a short-term trading strategy that involves making numerous trades throughout the day to capture small price movements. Scalpers aim to profit from minor fluctuations in price, often holding positions for just a few seconds to minutes. This strategy requires quick decision-making, strict risk management, and a deep understanding of market dynamics.",
+      "description": "Scalping focuses on making short-term trades to profit from small price changes. Traders use high leverage and tight stop-losses to maximize returns on minimal price movements.",
+      "strategy": "Enter trades based on technical indicators like moving averages or RSI. Use tight stop-losses and take profits quickly. Focus on high liquidity pairs to ensure quick execution.",
+      "benefit": "Scalping allows traders to capitalize on small price movements, potentially generating consistent profits throughout the day. It requires minimal capital and can be done with high leverage.",
+      "image": "https://robinnayak.github.io/horoscope_host_api/images/hammer.png"
+    },
+    {
+      "name": "Day Trading",
+      "type": "Short-Term",
+      "define": "Day trading is a strategy where traders buy and sell financial instruments within the same trading day, closing all positions before the market closes. This approach aims to profit from short-term price movements and requires quick decision-making, technical analysis skills, and a solid understanding of market trends.",
+      "description": "Day trading involves entering and exiting trades within the same day, avoiding overnight risk. Traders use technical analysis to identify short-term price movements and execute multiple trades daily.",
+      "strategy": "Use technical indicators like moving averages, RSI, and MACD to identify entry and exit points. Focus on high volatility stocks or forex pairs. Set strict stop-loss levels to manage risk.",
+      "benefit": "Day trading allows traders to take advantage of daily price fluctuations without holding positions overnight, reducing exposure to market gaps. It can lead to quick profits and requires minimal capital to start.",
+      "image": "https://robinnayak.github.io/horoscope_host_api/images/hammer.png"
+    },
+    {
+      "name": "Swing Trading",
+      "type": "Medium-Term",
+      "define": "Swing trading is a medium-term trading strategy that aims to capture price swings in financial markets. Traders hold positions for several days to weeks, using technical analysis to identify potential entry and exit points. This approach allows traders to profit from short- to medium-term price movements without the need for constant monitoring.",
+      "description": "Swing trading focuses on capturing short- to medium-term price movements. Traders hold positions for several days to weeks, using technical analysis to identify potential entry and  exit points.",
+      "strategy": "Identify key support and resistance levels using technical analysis. Enter trades on pullbacks to support in an uptrend or resistance in a downtrend. Use stop-loss orders to manage risk and set profit targets based on risk-reward ratios.",
+      "benefit": "Swing trading allows traders to profit from larger price movements without the need for constant monitoring. It requires less time commitment compared to day trading and can be done with lower capital requirements.",
+      "image": "https://robinnayak.github.io/horoscope_host_api/images/hammer.png"
+    },
+    {
+      "name": "Breakout Trading",
+      "type": "Short-Term",
+      "define": "Breakout trading is a strategy that involves entering a position when the price breaks through a significant support or resistance level. Traders aim to capitalize on the momentum that follows the breakout, which often leads to substantial price movements.",
+      "description": "Breakout trading focuses on entering positions when the price breaks through key support or resistance levels. Traders look for strong volume and momentum to confirm the breakout.",
+      "strategy": "Identify key support and resistance levels using technical analysis. Enter long on a breakout above resistance or short on a breakdown below support. Use stop-loss orders just outside the breakout zone to manage risk.",
+      "benefit": "Breakout trading allows traders to capture significant price movements that often follow breakouts, leading to potentially high profits. It can be applied in various markets and timeframes.",
+      "image": "https://robinnayak.github.io/horoscope_host_api/images/hammer.png"
+    }]
+  },
+  "RiskPsychology": {
+    "define": "Risk psychology refers to the emotional and psychological factors that influence traders' decision-making processes in financial markets. Understanding risk psychology helps traders manage emotions, avoid impulsive decisions, and develop a disciplined approach to trading. It involves recognizing cognitive biases, emotional triggers, and the impact of market sentiment on trading behavior.",
+    "Psychology": [
+      {
+        "name": "Risk/Reward Ratios",
+        "type": "Risk Management",
+        "description": "The risk-to-reward ratio measures the potential reward a trader can earn for every dollar risked. It is a key concept in ensuring long-term profitability.",
+        "strategy": "Define your stop-loss and target levels before entering a trade. Aim for a minimum risk/reward ratio of 1:2. If the setup does not meet the ratio, skip the trade.",
+        "benefit": "Helps traders avoid low-quality setups and maintain profitability even with a lower win rate. Encourages structured planning and consistent risk exposure.",
+        "image": "https://robinnayak.github.io/horoscope_host_api/images/hammer.png"
+      },
+      {
+        "name": "Trading Psychology",
+        "type": "Trader Mindset",
+        "description": "Trading psychology deals with the emotional discipline needed to manage trades. It involves controlling fear, greed, overconfidence, and hesitation.",
+        "strategy": "Develop a trading routine that includes journaling, regular self-assessment, and mental preparation. Follow your trading plan strictly, and avoid emotional decisions.",
+        "benefit": "Improves decision-making under pressure and enhances consistency. Reduces emotional mistakes that lead to losses.",
+        "image": "https://robinnayak.github.io/horoscope_host_api/images/hammer.png"
+      }
+    ]
+  },
+  "FundamentalAnalysis": {
+    "define": "Fundamental analysis is the evaluation of a security's intrinsic value by analyzing economic, financial, and other qualitative and quantitative factors. It involves assessing a company's financial health, industry position, and macroeconomic conditions to determine the fair value of its stock or other financial instruments. Fundamental analysis helps traders and investors make informed decisions based on the underlying factors that drive market prices.",
+    "EconomicIndicators": [
+      {
+        "name": "Gross Domestic Product (GDP)",
+        "type": "Economic Indicator",
+        "description": "GDP measures the total economic output of a country. It indicates the health of the economy and influences currency values.",
+        "strategy": "Monitor GDP growth rates to assess economic health. Positive GDP growth typically strengthens a country's currency, while negative growth can lead to depreciation.",
+        "benefit": "Understanding GDP helps traders anticipate currency movements and adjust their trading strategies accordingly.",
+        "image": "https://robinnayak.github.io/horoscope_host_api/images/hammer.png"
+      },
+      {
+        "name": "Impact of Interest Rates, GDP, Unemployment",
+        "type": "Economic Indicators",
+        "description": "Interest rates, GDP, and unemployment data offer key insights into a country's economic strength and currency valuation. Traders monitor these indicators to forecast potential market movements.",
+        "strategy": "Watch for high-impact economic releases on the calendar (like NFP, GDP, CPI). Trade based on how actual data compares to expectations — strong GDP or rising interest rates often strengthen the currency.",
+        "benefit": "Allows traders to anticipate major moves and align trades with macroeconomic trends, improving decision-making and timing.",
+        "image": "https://robinnayak.github.io/horoscope_host_api/images/hammer.png"
+      },
+      {
+        "name": "Geopolitical Events & Central Banks",
+        "type": "Market Movers",
+        "description": "Geopolitical developments and central bank decisions can introduce volatility and shape long-term trends. These events influence risk sentiment and monetary policy expectations.",
+        "strategy": "Monitor global news and central bank meetings. Avoid risky trades during high-uncertainty events. Align trades with central bank tone (hawkish/dovish) or market sentiment.",
+        "benefit": "Understanding these factors helps traders avoid unpredictable volatility and align with the bigger picture in global markets.",
+        "image": "https://robinnayak.github.io/horoscope_host_api/images/hammer.png"
+      }
+    ]
+  }
+}

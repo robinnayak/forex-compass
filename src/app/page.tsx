@@ -13,7 +13,7 @@ export default function Home() {
       <Header />
       <main className="flex-1 p-4 md:p-8">
         <Tabs defaultValue="sentiment" className="w-full">
-          <div className="flex justify-center">
+          <div className="flex justify-center mb-16">
             <TabsList className="grid w-full max-w-3xl grid-cols-2 sm:grid-cols-3 md:grid-cols-5">
               <TabsTrigger value="sentiment">
                 <BrainCircuit className="mr-2 h-4 w-4" /> Sentiment AI

@@ -46,3 +46,5 @@ export const MARKET_SESSIONS = [
   { name: "London", open: 7, close: 16 },
   { name: "New York", open: 12, close: 21 },
 ];
+
+
