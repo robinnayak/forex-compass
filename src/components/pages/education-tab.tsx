@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import {
   Card,
   CardContent,
@@ -27,24 +27,28 @@ export function EducationTab() {
   );
   const [isLoading, setIsLoading] = useState(true);
   const [activeFilter, setActiveFilter] = useState<string | null>(null);
+  const [hasFetched, setHasFetched] = useState(false);
 
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
+    if (hasFetched || data) return; // Prevent multiple fetches
+
     try {
       setIsLoading(true);
       const res = await fetch("/api/education-api");
       if (!res.ok) throw new Error("Failed to fetch education data");
       const responseData = await res.json();
       setData(responseData as EducationGuides);
+      setHasFetched(true);
     } catch (error) {
       console.error("Error fetching education data:", error);
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [hasFetched, data]);
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [fetchData]);
 
   if (isLoading)
     return <div className="p-4 text-center">Loading education content...</div>;
@@ -84,12 +88,18 @@ export function EducationTab() {
                 </div>
               )}
 
-              {renderPatternsOrIndicators(subTabData as {
-                [key: string]: string | CandlestickPattern[] | Indicator[] | undefined;
-                indicators?: Indicator[];
-                tools?: CandlestickPattern[];
-                define?: string;
-              })}
+              {renderPatternsOrIndicators(
+                subTabData as {
+                  [key: string]:
+                    | string
+                    | CandlestickPattern[]
+                    | Indicator[]
+                    | undefined;
+                  indicators?: Indicator[];
+                  tools?: CandlestickPattern[];
+                  define?: string;
+                }
+              )}
             </div>
           )}
         </div>
@@ -127,7 +137,8 @@ export function EducationTab() {
 
             {filterTypes.map(
               (type) =>
-                Array.isArray(data[type]) && data[type]!.length > 0 && (
+                Array.isArray(data[type]) &&
+                data[type]!.length > 0 && (
                   <button
                     key={type}
                     onClick={() => setActiveFilter(type)}
@@ -149,7 +160,8 @@ export function EducationTab() {
           <div className="space-y-6">
             {filterTypes.map(
               (type) =>
-                Array.isArray(data[type]) && data[type]!.length > 0 &&
+                Array.isArray(data[type]) &&
+                data[type]!.length > 0 &&
                 (!activeFilter || activeFilter === type) && (
                   <div key={type}>
                     <h3 className="text-lg font-semibold mb-3">
@@ -228,12 +240,18 @@ export function EducationTab() {
             <h3 className="text-lg font-semibold mb-2">Definition</h3>
             <p>{priceActionData.define}</p>
           </div>
-          {renderPatternsOrIndicators(priceActionData as unknown as {
-            [key: string]: string | CandlestickPattern[] | Indicator[] | undefined;
-            indicators?: Indicator[];
-            tools?: CandlestickPattern[];
-            define?: string;
-          })}
+          {renderPatternsOrIndicators(
+            priceActionData as unknown as {
+              [key: string]:
+                | string
+                | CandlestickPattern[]
+                | Indicator[]
+                | undefined;
+              indicators?: Indicator[];
+              tools?: CandlestickPattern[];
+              define?: string;
+            }
+          )}
         </div>
       </div>
     );
@@ -260,9 +278,9 @@ export function EducationTab() {
                 <h3 className="font-medium mb-2">{strategy.name}</h3>
                 {strategy.image && (
                   <div className="relative h-40 w-full mb-3">
-                    <Image 
-                      src={strategy.image} 
-                      alt={strategy.name} 
+                    <Image
+                      src={strategy.image}
+                      alt={strategy.name}
                       fill
                       className="object-contain"
                     />
@@ -317,9 +335,9 @@ export function EducationTab() {
               </p>
               {psych.image && (
                 <div className="relative h-64 w-full mt-4">
-                  <Image 
-                    src={psych.image} 
-                    alt={psych.name} 
+                  <Image
+                    src={psych.image}
+                    alt={psych.name}
                     fill
                     className="object-contain rounded-lg border"
                   />
@@ -383,7 +401,12 @@ export function EducationTab() {
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
-        <Tabs value={activeTab} onValueChange={(value) => setActiveTab(value as keyof EducationGuides)}>
+        <Tabs
+          value={activeTab}
+          onValueChange={(value) =>
+            setActiveTab(value as keyof EducationGuides)
+          }
+        >
           <div className="relative">
             <TabsList className="grid w-full grid-cols-3 gap-1 mb-20 rounded-lg p-1">
               <TabsTrigger value="TechnicalAnalysis">
