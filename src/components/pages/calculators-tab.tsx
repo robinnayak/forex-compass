@@ -1,21 +1,43 @@
 "use client";
 
-import { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import * as z from 'zod';
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
 
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { CURRENCY_PAIRS } from '@/lib/constants';
-import { AlertCircle, TrendingUp } from 'lucide-react';
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { CURRENCY_PAIRS } from "@/lib/constants";
+import { AlertCircle, TrendingUp } from "lucide-react";
 
 const formSchema = z.object({
   accountBalance: z.coerce.number().positive({ message: "Must be positive." }),
-  riskPercentage: z.coerce.number().min(0.1, { message: "Min 0.1%." }).max(100, { message: "Max 100%." }),
+  riskPercentage: z.coerce
+    .number()
+    .min(0.1, { message: "Min 0.1%." })
+    .max(100, { message: "Max 100%." }),
   stopLossPips: z.coerce.number().positive({ message: "Must be positive." }),
   currencyPair: z.string().min(1, { message: "Please select a pair." }),
 });
@@ -41,14 +63,15 @@ export function CalculatorsTab() {
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    const { accountBalance, riskPercentage, stopLossPips, currencyPair } = values;
+    const { accountBalance, riskPercentage, stopLossPips, currencyPair } =
+      values;
 
     const riskAmount = accountBalance * (riskPercentage / 100);
-    
+
     // Simplified pip value calculation for this example
-    // A real app would need live exchange rates for pairs like USD/JPY
-    const pipValuePerLot = currencyPair.includes('JPY') ? 1000 : 10;
-    const pipValue = (riskAmount / stopLossPips);
+    const isJPYPair = currencyPair.includes("JPY");
+    const pipValuePerLot = isJPYPair ? 1000 : 10; //
+    const pipValue = riskAmount / stopLossPips;
     const lotSize = pipValue / pipValuePerLot;
 
     setResult({
@@ -61,124 +84,164 @@ export function CalculatorsTab() {
 
   return (
     <div className="grid md:grid-cols-2 gap-8">
-      <Card>
-        <CardHeader>
-          <CardTitle className="font-headline">Position Size Calculator</CardTitle>
-          <CardDescription>Calculate your position size based on your risk parameters.</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-              <FormField
-                control={form.control}
-                name="accountBalance"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Account Balance ($)</FormLabel>
-                    <FormControl>
-                      <Input type="number" placeholder="10000" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="riskPercentage"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Risk Percentage (%)</FormLabel>
-                    <FormControl>
-                      <Input type="number" placeholder="1" step="0.1" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="stopLossPips"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Stop Loss (pips)</FormLabel>
-                    <FormControl>
-                      <Input type="number" placeholder="20" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="currencyPair"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Currency Pair</FormLabel>
-                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+      {/* Left Card - Calculator Form */}
+      <div className="relative z-0">
+        <Card className="relative z-10">
+          <CardHeader>
+            <CardTitle className="font-headline">
+              Position Size Calculator
+            </CardTitle>
+            <CardDescription>
+              Calculate your position size based on your risk parameters.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Form {...form}>
+              <form
+                onSubmit={form.handleSubmit(onSubmit)}
+                className="space-y-6"
+              >
+                <FormField
+                  control={form.control}
+                  name="accountBalance"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Account Balance ($)</FormLabel>
                       <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select a currency pair" />
-                        </SelectTrigger>
+                        <Input type="number" placeholder="10000" {...field} />
                       </FormControl>
-                      <SelectContent>
-                        {CURRENCY_PAIRS.map(pair => (
-                          <SelectItem key={pair} value={pair}>{pair}</SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <Button type="submit" className="w-full">Calculate</Button>
-            </form>
-          </Form>
-        </CardContent>
-      </Card>
-      
-      <div className="space-y-8">
-        <Card className="bg-primary/5 border-primary/20">
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="riskPercentage"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Risk Percentage (%)</FormLabel>
+                      <FormControl>
+                        <Input
+                          type="number"
+                          placeholder="1"
+                          step="0.1"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="stopLossPips"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Stop Loss (pips)</FormLabel>
+                      <FormControl>
+                        <Input type="number" placeholder="20" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="currencyPair"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Currency Pair</FormLabel>
+                      <Select
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                      >
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Select a currency pair" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          {CURRENCY_PAIRS.map((pair) => (
+                            <SelectItem key={pair} value={pair}>
+                              {pair}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <Button type="submit" className="w-full">
+                  Calculate
+                </Button>
+              </form>
+            </Form>
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Right Column - Results and Note */}
+      <div className="space-y-8 relative z-10">
+        {/* Results Card */}
+        <Card className=" border-primary/20 relative z-10">
           <CardHeader>
             <CardTitle className="flex items-center gap-2 font-headline">
-              <TrendingUp className="text-primary"/>
+              <TrendingUp className="text-primary" />
               Calculation Results
             </CardTitle>
           </CardHeader>
           {result ? (
             <CardContent className="grid grid-cols-2 gap-4 text-center">
-              <div className="bg-background/50 rounded-lg p-4">
+              <div className="bg-background rounded-lg p-4 border">
                 <p className="text-sm text-muted-foreground">Amount to Risk</p>
-                <p className="text-2xl font-bold font-headline text-primary">${result.riskAmount}</p>
+                <p className="text-2xl font-bold font-headline text-primary">
+                  ${result.riskAmount}
+                </p>
               </div>
-              <div className="bg-background/50 rounded-lg p-4">
+              <div className="bg-background rounded-lg p-4 border">
                 <p className="text-sm text-muted-foreground">Pip Value</p>
-                <p className="text-2xl font-bold font-headline text-primary">${result.pipValue}</p>
+                <p className="text-2xl font-bold font-headline text-primary">
+                  ${result.pipValue}
+                </p>
               </div>
-              <div className="bg-background/50 rounded-lg p-4">
+              <div className="bg-background rounded-lg p-4 border">
                 <p className="text-sm text-muted-foreground">Lot Size</p>
-                <p className="text-2xl font-bold font-headline text-primary">{result.lotSize}</p>
+                <p className="text-2xl font-bold font-headline text-primary">
+                  {result.lotSize}
+                </p>
               </div>
-              <div className="bg-background/50 rounded-lg p-4">
+              <div className="bg-background rounded-lg p-4 border">
                 <p className="text-sm text-muted-foreground">Units</p>
-                <p className="text-2xl font-bold font-headline text-primary">{result.units.toLocaleString()}</p>
+                <p className="text-2xl font-bold font-headline text-primary">
+                  {result.units.toLocaleString()}
+                </p>
               </div>
             </CardContent>
           ) : (
             <CardContent>
-                <p className="text-center text-muted-foreground py-12">Enter your trade details to see the results.</p>
+              <p className="text-center text-muted-foreground py-12">
+                Enter your trade details to see the results.
+              </p>
             </CardContent>
           )}
         </Card>
-        <Card className="bg-accent/5 border-accent/20">
+
+        {/* Note Card */}
+        <Card className="border-accent/20 relative z-10">
           <CardHeader>
-             <CardTitle className="flex items-center gap-2 text-sm font-semibold text-accent-foreground/80">
-              <AlertCircle className="text-accent text-white"/>
-              <span className='text-primary'>Risk Management Note</span>
+            <CardTitle className="flex items-center gap-2 text-sm font-semibold text-accent-foreground/80">
+              <AlertCircle className="text-accent" />
+              <span className="text-primary">Risk Management Note</span>
             </CardTitle>
           </CardHeader>
           <CardContent>
             <p className="text-sm text-muted-foreground">
-              This calculator provides a standard position size. Always consider market volatility, spreads, and your personal risk tolerance. Never risk more than you are willing to lose.
+              This calculator assumes 1 standard lot (100,000 units) has a pip
+              value of $10 for most pairs and ¥1000 for JPY pairs. Actual pip
+              values may vary based on current market rates. Always consider
+              market volatility, spreads, and your personal risk tolerance.
+              Never risk more than you are willing to lose.
             </p>
           </CardContent>
         </Card>
