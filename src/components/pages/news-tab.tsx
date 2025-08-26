@@ -4,41 +4,32 @@ import { useEffect, useState, useCallback } from "react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
+import { NewsItem } from "@/types/news";
+import { useCache } from "@/context/CacheContext";
 
 
-type NewsItem = {
-  title: string;
-  url: string;
-  time_published: string;
-  source: string;
-  banner_image?: string;
-  summary: string;
-  overall_sentiment_label: string;
-  ticker_sentiment: {
-    ticker: string;
-    relevance_score: string;
-    ticker_sentiment_score: string;
-    ticker_sentiment_label: string;
-  }[];
-};
+
 
 // Module-level cache to store news data during the user's session.
-let newsCache: { data: NewsItem[]; timestamp: number } | null = null;
+// let newsCache: { data: NewsItem[]; timestamp: number } | null = null;
 // Cache duration: 24 hours
 const NEWS_CACHE_DURATION_MS = 60 * 60 * 1000 * 24; // 24 HOURS
-
+const NEWS_CACHE_KEY = "news_cache";
 export function NewsTab() {
   const [currencyFilter, setCurrencyFilter] = useState("all");
   const [impactFilter, setImpactFilter] = useState("all");
   const [newsItems, setNewsItems] = useState<NewsItem[]>([]);
   const [loading, setLoading] = useState(true);
-
+  const { getCache, setCache, isCacheValid } = useCache();
   const fetchNewsSentiment = useCallback(async () => {
     // Check if a valid cache exists
-    if (newsCache && (Date.now() - newsCache.timestamp < NEWS_CACHE_DURATION_MS)) {
-      setNewsItems(newsCache.data);
-      setLoading(false);
-      return;
+    if (isCacheValid(NEWS_CACHE_KEY, NEWS_CACHE_DURATION_MS)) {
+      const cachedData = getCache(NEWS_CACHE_KEY);
+      if (cachedData) {
+        setNewsItems(cachedData.data as NewsItem[]);
+        setLoading(false);
+        return;
+      }
     }
 
     setLoading(true);
@@ -50,13 +41,13 @@ export function NewsTab() {
       const data = await response.json();
       const feed = data.feed || [];
       setNewsItems(feed);
-      newsCache = { data: feed, timestamp: Date.now() }; // Update the cache
+      setCache(NEWS_CACHE_KEY, feed); // Save to cache
     } catch (error) {
       console.error("Error fetching news sentiment:", error);
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [getCache, setCache, isCacheValid]);
 
   useEffect(() => {
     fetchNewsSentiment();
