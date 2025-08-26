@@ -17,6 +17,7 @@ import PatternCard from "../education/PatternCard";
 import IndicatorCard from "../education/IndicatorCard";
 
 import Image from "next/image";
+import { useCache } from "@/context/CacheContext";
 
 export function EducationTab() {
   const [data, setData] = useState<EducationGuides | null>(null);
@@ -28,6 +29,9 @@ export function EducationTab() {
   const [isLoading, setIsLoading] = useState(true);
   const [activeFilter, setActiveFilter] = useState<string | null>(null);
   const [hasFetched, setHasFetched] = useState(false);
+  const { getCache, setCache } = useCache();
+  const EDUCATION_CACHE_DURATION_MS = 60 * 60 * 1000 * 24; // 1 hour
+  const EDUCATION_CACHE_KEY = "education_data";
 
   const fetchData = useCallback(async () => {
     if (hasFetched || data) return; // Prevent multiple fetches
