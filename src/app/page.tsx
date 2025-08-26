@@ -8,6 +8,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Newspaper, Calculator, GraduationCap, Clock, BrainCircuit } from 'lucide-react';
 import SentimentN8nTabUpdated from '@/components/pages/sentiment-n8n-tab-updated';
 import { SentimentProvider } from '@/contexts/SentimentContext';
+import TechnicalBot from '@/components/pages/technical-bot';
 
 export default function Home() {
   return (
@@ -36,6 +37,9 @@ export default function Home() {
                 <TabsTrigger value="market-hours">
                   <Clock className="mr-2 h-4 w-4" /> Market Hours
                 </TabsTrigger>
+                <TabsTrigger value="ai-bot">
+                  <Clock className="mr-2 h-4 w-4" /> AI BOT
+                </TabsTrigger>
               </TabsList>
             </div>
             <TabsContent value="sentiment" className="mt-6">
@@ -55,6 +59,9 @@ export default function Home() {
             </TabsContent>
             <TabsContent value="market-hours" className="mt-6">
               <MarketHoursTab />
+            </TabsContent>
+            <TabsContent value="ai-bot" className="mt-6">
+              <TechnicalBot />
             </TabsContent>
           </Tabs>
         </main>
