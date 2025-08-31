@@ -1,115 +1,30 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
-import axios from "axios";
-
-// Types for the backend response
-interface OhlcvTick {
-  Date: string;     // ISO string
-  Open: number;
-  High: number;
-  Low: number;
-  Close: number;
-  Volume: number;
-}
-interface OhlcvResponse {
-  pair: string;
-  interval: string;
-  date: string;     // server timestamp ISO
-  total_rows: number;
-  returned: number;
-  has_more: boolean;
-  cursor: string;   // next cursor
-  data: OhlcvTick;  // single row returned by "live/single"
-}
+import React, { useState } from "react";
+import { fetchOhlcvBatch, formatOhlcvTick, formatTickDate } from "../../utils/ohlcvUtils";
+import { useOhlcvContext } from "../../contexts/OhlcvContext";
 
 const StrategyTab: React.FC = () => {
-  // Configurable inputs
-  const baseUrl =
-    process.env.NEXT_PUBLIC_TECHNICAL_API_BASE ?? "http://localhost:8000";
-  const pollMs =
-    Number(process.env.NEXT_PUBLIC_POLL_MS ?? "") || 10_000; // default 10s
+  // Get poll interval from env vars for display purposes
+  const pollMs = Number(process.env.NEXT_PUBLIC_POLL_MS ?? "") || 10_000;
 
-  // Query params
-  const pair = "eurusd";
-  const interval = "1m";
+  // State for batch fetch demo
+  const [batchLoading, setBatchLoading] = useState(false);
+  const [batchResults, setBatchResults] = useState<string[]>([]);
 
-  // Local state
-  const [lastTick, setLastTick] = useState<OhlcvTick | null>(null);
-  const [ticks, setTicks] = useState<OhlcvTick[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-
-  // Refs to avoid interval recreation
-  const cursorRef = useRef<string | undefined>(undefined);
-  const mountedRef = useRef(true);
-  const resetRef = useRef<boolean | undefined>(undefined);
-  const seenDatesRef = useRef<Set<string>>(new Set());
-
-  const fetchOhlcv = async () => {
-    const params = new URLSearchParams({ pair, interval });
-    if (cursorRef.current) params.set("cursor", cursorRef.current);
-
-    // One-shot reset: include once and then clear
-    const doReset = resetRef.current === true;
-    if (doReset) {
-      params.set("reset", "true");
-      resetRef.current = undefined;
-    }
-
-    const url = `${baseUrl}/technical/simulate/live/single?${params.toString()}`;
-
+  // Use our context to access OHLCV data
+  const { lastTick, ticks, loading, error, reset, pair, interval } = useOhlcvContext();
+  
+  // Example of using the utility function directly for one-time fetches
+  const handleFetchBatch = async () => {
     try {
-      setLoading(true);
-      setError(null);
-
-      const response = await axios.get<OhlcvResponse>(url, {
-        signal: AbortSignal.timeout(Math.max(pollMs, 10_000)),
-      });
-      if (!mountedRef.current) return;
-
-      const payload = response.data;
-      cursorRef.current = payload.cursor;
-
-      const tick = payload.data;
-      setLastTick(tick);
-
-      // De-duplicate by Date even if duplicates are non-consecutive
-      setTicks((prev) => {
-        if (seenDatesRef.current.has(tick.Date)) return prev;
-        seenDatesRef.current.add(tick.Date);
-        return [tick, ...prev].slice(0, 5000);
-      });
-    } catch (e: unknown) {
-      if (!mountedRef.current) return;
-      if ((e as Error)?.name === "AbortError") return;
-      setError((e as Error)?.message ?? "Failed to fetch OHLCV data");
+      setBatchLoading(true);
+      const result = await fetchOhlcvBatch({ pair, interval });
+      setBatchResults(result.map(formatOhlcvTick));
+    } catch (err) {
+      console.error("Failed to fetch batch:", err);
     } finally {
-      if (mountedRef.current) setLoading(false);
+      setBatchLoading(false);
     }
-  };
-
-  useEffect(() => {
-    mountedRef.current = true;
-
-    // Initial fetch immediately
-    fetchOhlcv();
-
-    // Stable polling
-    const id = setInterval(fetchOhlcv, pollMs);
-    return () => {
-      mountedRef.current = false;
-      clearInterval(id);
-    };
-  }, [baseUrl, pollMs]);
-
-  const handleReset = () => {
-    // Clear local buffers and request a server reset on next call
-    cursorRef.current = undefined;
-    seenDatesRef.current.clear();
-    setTicks([]);
-    setLastTick(null);
-    resetRef.current = true;
-    fetchOhlcv(); // call once immediately with reset=true
   };
 
   return (
@@ -123,10 +38,19 @@ const StrategyTab: React.FC = () => {
       <div className="flex items-center gap-2">
         <button
           type="button"
-          onClick={handleReset}
+          onClick={reset}
           className="px-2 py-1 text-sm rounded hover:bg-background border-white border-2"
         >
           Reset stream
+        </button>
+        
+        <button
+          type="button"
+          onClick={handleFetchBatch}
+          className="px-2 py-1 text-sm rounded hover:bg-background border-white border-2"
+          disabled={batchLoading}
+        >
+          {batchLoading ? "Loading..." : "Fetch Batch"}
         </button>
       </div>
 
@@ -158,9 +82,9 @@ const StrategyTab: React.FC = () => {
               </tr>
             </thead>
             <tbody>
-              {ticks.slice(0, 10).map((tick, index) => (
+              {ticks.slice(0, 10).map((tick, index: number) => (
                 <tr key={tick.Date} className={index === 0 ? "bg-blue-50" : "hover:bg-gray-50"}>
-                  <td className="px-2 py-1">{new Date(tick.Date).toLocaleTimeString()}</td>
+                  <td className="px-2 py-1">{formatTickDate(tick)}</td>
                   <td className="px-2 py-1 text-right">{tick.Open.toFixed(5)}</td>
                   <td className="px-2 py-1 text-right">{tick.High.toFixed(5)}</td>
                   <td className="px-2 py-1 text-right">{tick.Low.toFixed(5)}</td>
@@ -177,6 +101,20 @@ const StrategyTab: React.FC = () => {
               )}
             </tbody>
           </table>
+        </div>
+      )}
+      
+      {/* Batch fetch results */}
+      {batchResults.length > 0 && (
+        <div className="mt-4">
+          <h3 className="text-sm font-medium mb-2">Batch Fetch Results:</h3>
+          <div className="overflow-auto max-h-40 border border-gray-300 rounded p-2 text-xs">
+            {batchResults.map((result, idx) => (
+              <div key={idx} className="py-1 border-b last:border-b-0 border-gray-100">
+                {result}
+              </div>
+            ))}
+          </div>
         </div>
       )}
     </div>

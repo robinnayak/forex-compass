@@ -3,6 +3,7 @@ import './globals.css';
 import { Toaster } from '@/components/ui/toaster';
 import BackgroundAnimation from '@/components/ui/background';
 import { CacheProvider } from '@/context/CacheContext';
+import { OhlcvProvider } from '@/contexts/OhlcvContext';
 
 
 export const metadata: Metadata = {
@@ -22,7 +23,9 @@ export default function RootLayout({
         <BackgroundAnimation />
         <div style={{ position: 'relative', zIndex: 1 }}>
           <CacheProvider>
-            {children}
+            <OhlcvProvider>
+              {children}
+            </OhlcvProvider>
           </CacheProvider>
           <Toaster />
         </div>
