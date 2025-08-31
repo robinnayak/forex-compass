@@ -48,3 +48,15 @@ export const MARKET_SESSIONS = [
 ];
 
 
+export const supportedPairs = [
+  "EUR/USD",
+  "GBP/USD",
+  "USD/JPY",
+  "AUD/USD",
+  "USD/CAD",
+  "NZD/USD",
+  "USD/CHF",
+  "EUR/GBP",
+  "EUR/JPY",
+  "GBP/JPY",
+];

@@ -5,10 +5,13 @@ import { EducationTab } from '@/components/pages/education-tab';
 import { MarketHoursTab } from '@/components/pages/market-hours-tab';
 import { SentimentAITab } from '@/components/pages/sentiment-ai-tab';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Newspaper, Calculator, GraduationCap, Clock, BrainCircuit } from 'lucide-react';
+import { Newspaper, Calculator, GraduationCap, Clock, BrainCircuit, LineChart } from 'lucide-react';
 import SentimentN8nTabUpdated from '@/components/pages/sentiment-n8n-tab-updated';
 import { SentimentProvider } from '@/contexts/SentimentContext';
 import TechnicalBot from '@/components/pages/technical-bot';
+import LiveData from '@/components/pages/live-data-tab';
+import StrategyTab from '@/components/pages/strategy-tab';
+// import LiveDataHistoryTab from '@/components/pages/live-data-history-tab';
 
 export default function Home() {
   return (
@@ -22,9 +25,9 @@ export default function Home() {
                 <TabsTrigger value="sentiment">
                   <BrainCircuit className="mr-2 h-4 w-4" /> Sentiment AI
                 </TabsTrigger>
-                <TabsTrigger value="sentiment-n8n">
+                {/* <TabsTrigger value="sentiment-n8n">
                   <BrainCircuit className="mr-2 h-4 w-4" /> Sentiment
-                </TabsTrigger>
+                </TabsTrigger> */}
                 <TabsTrigger value="news">
                   <Newspaper className="mr-2 h-4 w-4" /> News
                 </TabsTrigger>
@@ -39,6 +42,16 @@ export default function Home() {
                 </TabsTrigger>
                 <TabsTrigger value="ai-bot">
                   <Clock className="mr-2 h-4 w-4" /> AI BOT
+                </TabsTrigger>
+                <TabsTrigger value='live-data'>
+                  <LineChart className="mr-2 h-4 w-4" /> Live Data
+                </TabsTrigger>
+                {/* <TabsTrigger value="history">
+                  <BarChart3 className="mr-2 h-4 w-4" /> Data History
+                </TabsTrigger> */}
+
+                <TabsTrigger value="strategy">
+                  <Clock className="mr-2 h-4 w-4" /> Strategy
                 </TabsTrigger>
               </TabsList>
             </div>
@@ -63,6 +76,19 @@ export default function Home() {
             <TabsContent value="ai-bot" className="mt-6">
               <TechnicalBot />
             </TabsContent>
+            <TabsContent value="live-data" className="mt-6">
+              <LiveData />
+            </TabsContent>
+            <TabsContent value="strategy" className="mt-6">
+              <StrategyTab />
+            </TabsContent>
+
+            {/* <TabsContent value="simulator" className="mt-6">
+              <LiveDataSimulationTab />
+            </TabsContent> */}
+            {/* <TabsContent value="history" className="mt-6">
+              <LiveDataHistoryTab />
+            </TabsContent> */}
           </Tabs>
         </main>
       </div>
