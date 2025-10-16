@@ -5,7 +5,7 @@ import { useOhlcvContext } from "../../contexts/OhlcvContext";
 
 const StrategyTab: React.FC = () => {
   // Get poll interval from env vars for display purposes
-  const pollMs = Number(process.env.NEXT_PUBLIC_POLL_MS ?? "") || 10_000;
+  const pollMs = Number(process.env.NEXT_PUBLIC_POLL_MS ?? "") || 10_000;  // Default to 10 seconds
 
   // State for batch fetch demo
   const [batchLoading, setBatchLoading] = useState(false);
