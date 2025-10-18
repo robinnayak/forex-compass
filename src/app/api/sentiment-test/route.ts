@@ -17,7 +17,7 @@ export async function GET() {
     risk_level: "LOW",
     timeframe: "SHORT",
     sources_analyzed: 10,
-    source_types: ["reddit", "news"],
+    source_types: ["reddit", "news"], 
     analysis_timestamp: new Date().toISOString(),
     component_analyses: [{
       source: "test",

@@ -9,6 +9,7 @@ import { Newspaper, Calculator, GraduationCap, Clock, BrainCircuit } from 'lucid
 import SentimentN8nTabUpdated from '@/components/pages/sentiment-n8n-tab-updated';
 import { SentimentProvider } from '@/contexts/SentimentContext';
 import TechnicalBot from '@/components/pages/technical-bot';
+import ForexChart from '@/components/pages/forex-chart';
 
 export default function Home() {
   return (
@@ -22,9 +23,9 @@ export default function Home() {
                 <TabsTrigger value="sentiment">
                   <BrainCircuit className="mr-2 h-4 w-4" /> Sentiment AI
                 </TabsTrigger>
-                <TabsTrigger value="sentiment-n8n">
+                {/* <TabsTrigger value="sentiment-n8n">
                   <BrainCircuit className="mr-2 h-4 w-4" /> Sentiment
-                </TabsTrigger>
+                </TabsTrigger> */}
                 <TabsTrigger value="news">
                   <Newspaper className="mr-2 h-4 w-4" /> News
                 </TabsTrigger>
@@ -39,6 +40,9 @@ export default function Home() {
                 </TabsTrigger>
                 <TabsTrigger value="ai-bot">
                   <Clock className="mr-2 h-4 w-4" /> AI BOT
+                </TabsTrigger>
+                <TabsTrigger value="forex-chart">
+                  <Clock className="mr-2 h-4 w-4" /> Forex Chart
                 </TabsTrigger>
               </TabsList>
             </div>
@@ -63,6 +67,10 @@ export default function Home() {
             <TabsContent value="ai-bot" className="mt-6">
               <TechnicalBot />
             </TabsContent>
+            <TabsContent value="forex-chart" className="mt-6">
+              <ForexChart />
+            </TabsContent>
+            
           </Tabs>
         </main>
       </div>
