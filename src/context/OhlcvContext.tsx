@@ -11,6 +11,10 @@ interface PairData {
   countdown: number;
   isLoading: boolean;
   error: string | null;
+  // New fields for progressive loading
+  allLoadedData: DataPoint[]; // All data loaded so far
+  totalAvailable: number; // Total points available in backend
+  hasMoreData: boolean; // Whether more data can be loaded
 }
 
 interface OhlcvContextType {
@@ -24,9 +28,10 @@ interface OhlcvContextType {
 
 const MAJOR_PAIRS = ["EURUSD", "GBPUSD"];
 const DEFAULT_TIMEFRAME = "1";
-const WINDOW_SIZE = 50; // Fixed window size
-const INITIAL_FROM = 0;
-const INITIAL_TO = WINDOW_SIZE;
+const INITIAL_LOAD_SIZE = 200; // Load more data initially
+const PRE_FETCH_THRESHOLD = 50; // Pre-fetch when 50 points from end
+const PRE_FETCH_SIZE = 100; // Pre-fetch 100 more points
+const VISIBLE_DATA_POINTS = 100; // Show last 100 points in charts
 
 const OhlcvContext = createContext<OhlcvContextType | null>(null);
 
@@ -37,8 +42,8 @@ export function OhlcvProvider({ children }: { children: ReactNode }) {
   const [timeframe] = useState(DEFAULT_TIMEFRAME);
   const timerRef = useRef<NodeJS.Timeout>();
 
-  const [fromLimit, setFromLimit] = useState(INITIAL_FROM);
-  const [toLimit, setToLimit] = useState(INITIAL_TO);
+  // Track loading state per pair to avoid duplicate requests
+  const loadingPairsRef = useRef<Set<string>>(new Set());
 
   // Initialize all pairs data structure
   const initializePairsData = useCallback(() => {
@@ -50,24 +55,31 @@ export function OhlcvProvider({ children }: { children: ReactNode }) {
         currentIndex: 0,
         countdown: parseInt(timeframe) * 60,
         isLoading: true,
-        error: null
+        error: null,
+        allLoadedData: [], // All data loaded so far
+        totalAvailable: 0, // Will be set after first fetch
+        hasMoreData: true // Assume there's more data initially
       };
     });
     return initialData;
   }, [timeframe]);
 
-  // Fetch data for a specific pair with current limits
-  const fetchPairData = useCallback(async (pair: string, customFrom?: number, customTo?: number) => {
+  // Fetch initial data for a pair
+  const fetchInitialPairData = useCallback(async (pair: string) => {
+    if (loadingPairsRef.current.has(pair)) return;
+    
+    loadingPairsRef.current.add(pair);
+    
     try {
       setPairsData(prev => ({
         ...prev,
         [pair]: { ...prev[pair], isLoading: true, error: null }
       }));
 
-      const currentFrom = customFrom !== undefined ? customFrom : fromLimit;
-      const currentTo = customTo !== undefined ? customTo : toLimit;
-
-      const response = await axios.get(`/api/forex-ohlcv/${pair}/${timeframe}?to_limit=${currentTo}&from_limit=${currentFrom}`);
+      // Fetch initial larger window
+      const response = await axios.get(
+        `/api/forex-ohlcv/${pair}/${timeframe}?from_limit=0&to_limit=${INITIAL_LOAD_SIZE}`
+      );
       
       if (!response.data?.data || !Array.isArray(response.data.data)) {
         throw new Error('Invalid data format received');
@@ -75,17 +87,19 @@ export function OhlcvProvider({ children }: { children: ReactNode }) {
 
       const pairData: PairData = {
         pair,
-        data: response.data.data,
+        data: response.data.data.slice(0, VISIBLE_DATA_POINTS), // Show only recent points
         currentIndex: 0,
         countdown: parseInt(timeframe) * 60,
         isLoading: false,
-        error: null
+        error: null,
+        allLoadedData: response.data.data, // Store all loaded data
+        totalAvailable: response.data.total || 0,
+        hasMoreData: response.data.metadata?.hasMore ?? true
       };
 
       setPairsData(prev => ({ ...prev, [pair]: pairData }));
-      console.log(`[OHLCV] Successfully loaded ${pair}: ${response.data.data.length} data points (${currentFrom}-${currentTo})`);
+      console.log(`[OHLCV] Initial load ${pair}: ${response.data.data.length} points, total available: ${response.data.total || 'unknown'}`);
       
-      return pairData;
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Unknown error occurred';
       console.error(`[OHLCV] Error fetching ${pair}:`, errorMessage);
@@ -98,10 +112,80 @@ export function OhlcvProvider({ children }: { children: ReactNode }) {
           error: errorMessage 
         }
       }));
-      
-      return null;
+    } finally {
+      loadingPairsRef.current.delete(pair);
     }
-  }, [timeframe, fromLimit, toLimit]);
+  }, [timeframe]);
+
+  // Pre-fetch more data when approaching end of current data
+  const preFetchMoreData = useCallback(async (pair: string) => {
+    if (loadingPairsRef.current.has(pair)) return;
+    
+    const currentPairData = pairsData[pair];
+    if (!currentPairData || !currentPairData.hasMoreData) return;
+    
+    loadingPairsRef.current.add(pair);
+    
+    try {
+      const nextFrom = currentPairData.allLoadedData.length;
+      const nextTo = nextFrom + PRE_FETCH_SIZE;
+      
+      console.log(`[OHLCV] Pre-fetching ${pair}: ${nextFrom}-${nextTo}`);
+      
+      const response = await axios.get(
+        `/api/forex-ohlcv/${pair}/${timeframe}?from_limit=${nextFrom}&to_limit=${nextTo}`
+      );
+      
+      if (response.data?.data && Array.isArray(response.data.data)) {
+        // Merge new data with existing data
+        const newAllData = [...currentPairData.allLoadedData, ...response.data.data];
+        
+        setPairsData(prev => ({
+          ...prev,
+          [pair]: {
+            ...prev[pair],
+            allLoadedData: newAllData,
+            hasMoreData: response.data.metadata?.hasMore ?? true,
+            // Update visible data to show recent points
+            data: newAllData.slice(
+              Math.max(0, currentPairData.currentIndex - VISIBLE_DATA_POINTS + 1),
+              currentPairData.currentIndex + 1
+            )
+          }
+        }));
+        
+        console.log(`[OHLCV] Pre-fetched ${pair}: +${response.data.data.length} points, total loaded: ${newAllData.length}`);
+      }
+    } catch (err) {
+      console.error(`[OHLCV] Error pre-fetching ${pair}:`, err);
+    } finally {
+      loadingPairsRef.current.delete(pair);
+    }
+  }, [pairsData, timeframe]);
+
+  // Check if we need to pre-fetch more data
+  const checkAndPreFetch = useCallback((pair: string, currentIndex: number, totalLoadedLength: number) => {
+    const pointsRemaining = totalLoadedLength - currentIndex;
+    
+    if (pointsRemaining <= PRE_FETCH_THRESHOLD) {
+      console.log(`[OHLCV] Low data buffer for ${pair} (${pointsRemaining} points left), pre-fetching more...`);
+      preFetchMoreData(pair);
+    }
+  }, [preFetchMoreData]);
+
+  // Update visible data (show recent points for charts)
+  const updateVisibleData = useCallback((pair: string, currentIndex: number, allLoadedData: DataPoint[]) => {
+    const startIndex = Math.max(0, currentIndex - VISIBLE_DATA_POINTS + 1);
+    const visibleData = allLoadedData.slice(startIndex, currentIndex + 1);
+    
+    setPairsData(prev => ({
+      ...prev,
+      [pair]: {
+        ...prev[pair],
+        data: visibleData
+      }
+    }));
+  }, []);
 
   // Fetch data for all pairs
   const fetchAllPairsData = useCallback(async () => {
@@ -112,94 +196,47 @@ export function OhlcvProvider({ children }: { children: ReactNode }) {
       // Initialize all pairs first
       setPairsData(initializePairsData());
 
-      // Fetch data for all pairs concurrently
-      const promises = MAJOR_PAIRS.map(pair => fetchPairData(pair, fromLimit, toLimit));
-      const results = await Promise.allSettled(promises);
+      // Fetch initial data for all pairs
+      const promises = MAJOR_PAIRS.map(pair => fetchInitialPairData(pair));
+      await Promise.allSettled(promises);
 
-      // Check if any requests failed
-      const failedPairs = results
-        .map((result, index) => result.status === 'rejected' ? MAJOR_PAIRS[index] : null)
-        .filter(Boolean);
-
-      if (failedPairs.length > 0) {
-        setError(`Failed to load: ${failedPairs.join(', ')}`);
-      }
-
-      console.log(`[OHLCV] Initialized ${MAJOR_PAIRS.length} currency pairs with data ${fromLimit}-${toLimit}`);
+      console.log(`[OHLCV] Initialized ${MAJOR_PAIRS.length} pairs with ${INITIAL_LOAD_SIZE} points each`);
     } catch (err) {
       setError('Failed to initialize currency pairs data');
       console.error('[OHLCV] Initialization error:', err);
     } finally {
       setIsLoading(false);
     }
-  }, [fetchPairData, initializePairsData, fromLimit, toLimit]);
+  }, [fetchInitialPairData, initializePairsData]);
 
-  // Refresh single pair with current limits
+  // Refresh single pair
   const refreshPair = useCallback(async (pair: string) => {
-    if (MAJOR_PAIRS.includes(pair)) {
-      await fetchPairData(pair, fromLimit, toLimit);
-    }
-  }, [fetchPairData, fromLimit, toLimit]);
+    await fetchInitialPairData(pair);
+  }, [fetchInitialPairData]);
 
   // Refresh all pairs
   const refreshAllPairs = useCallback(async () => {
     await fetchAllPairsData();
   }, [fetchAllPairsData]);
 
-  // Move to next data window
-  const moveToNextWindow = useCallback(async () => {
-    console.log(`[OHLCV] Moving to next data window: ${fromLimit + 1}-${toLimit + 1}`);
-    
-    // Update limits for next window
-    const newFrom = fromLimit + 1;
-    const newTo = toLimit + 1;
-    
-    setFromLimit(newFrom);
-    setToLimit(newTo);
+  // Smooth data progression - NO WINDOW SHIFTING!
+  const progressToNextDataPoint = useCallback(() => {
+    setPairsData(prev => {
+      const updated = { ...prev };
+      let hasUpdates = false;
 
-    // Refresh all pairs with new limits
-    setIsLoading(true);
-    try {
-      const promises = MAJOR_PAIRS.map(pair => fetchPairData(pair, newFrom, newTo));
-      await Promise.allSettled(promises);
-      console.log(`[OHLCV] Successfully updated to window ${newFrom}-${newTo}`);
-    } catch (err) {
-      console.error('[OHLCV] Error moving to next window:', err);
-    } finally {
-      setIsLoading(false);
-    }
-  }, [fromLimit, toLimit, fetchPairData]);
+      Object.keys(updated).forEach(pair => {
+        const pairData = updated[pair];
+        
+        if (pairData.isLoading || pairData.allLoadedData.length === 0) return;
 
-  // Initialize all pairs on mount
-  useEffect(() => {
-    fetchAllPairsData();
-  }, [fetchAllPairsData]);
-
-  // Timer for data progression and window movement
-  useEffect(() => {
-    // Clear existing timer
-    if (timerRef.current) {
-      clearInterval(timerRef.current);
-    }
-
-    timerRef.current = setInterval(() => {
-      setPairsData(prev => {
-        const updated = { ...prev };
-        let hasUpdates = false;
-
-        Object.keys(updated).forEach(pair => {
-          const pairData = updated[pair];
+        const newCountdown = pairData.countdown - 1;
+        
+        if (newCountdown <= 0) {
+          const newIndex = pairData.currentIndex + 1;
           
-          // Skip if no data or still loading
-          if (pairData.isLoading || pairData.data.length === 0) return;
-
-          // Update countdown
-          const newCountdown = pairData.countdown - 1;
-          
-          // Check if we need to move to next data point AND next window
-          if (newCountdown <= 0) {
-            // Move to next data point within current window
-            const newIndex = (pairData.currentIndex + 1) % pairData.data.length;
+          // Check if we have enough data for the new index
+          if (newIndex < pairData.allLoadedData.length) {
             updated[pair] = {
               ...pairData,
               currentIndex: newIndex,
@@ -207,21 +244,58 @@ export function OhlcvProvider({ children }: { children: ReactNode }) {
             };
             hasUpdates = true;
             
-            console.log(`[OHLCV] ${pair} advanced to index: ${newIndex}`);
+            // Update visible data for charts
+            updateVisibleData(pair, newIndex, pairData.allLoadedData);
             
-            // Move to next data window (this will trigger a re-fetch)
-            moveToNextWindow();
+            // Check if we need to pre-fetch more data
+            checkAndPreFetch(pair, newIndex, pairData.allLoadedData.length);
+            
+            if (newIndex % 10 === 0) { // Log every 10 points to avoid spam
+              console.log(`[OHLCV] ${pair} progressed to index: ${newIndex}/${pairData.allLoadedData.length}`);
+            }
           } else {
-            updated[pair] = {
-              ...pairData,
-              countdown: newCountdown
-            };
-            hasUpdates = true;
+            // Reached end of loaded data
+            if (pairData.hasMoreData) {
+              console.log(`[OHLCV] ${pair} reached end of loaded data, waiting for pre-fetch...`);
+              // Trigger immediate pre-fetch if we haven't already
+              preFetchMoreData(pair);
+            } else {
+              console.log(`[OHLCV] ${pair} reached end of all available data`);
+              // Reset to beginning or pause, depending on your needs
+              updated[pair] = {
+                ...pairData,
+                countdown: parseInt(timeframe) * 60 // Keep counting but don't advance
+              };
+              hasUpdates = true;
+            }
           }
-        });
-
-        return hasUpdates ? updated : prev;
+        } else {
+          // Just update countdown
+          updated[pair] = {
+            ...pairData,
+            countdown: newCountdown
+          };
+          hasUpdates = true;
+        }
       });
+
+      return hasUpdates ? updated : prev;
+    });
+  }, [timeframe, checkAndPreFetch, preFetchMoreData, updateVisibleData]);
+
+  // Initialize all pairs on mount
+  useEffect(() => {
+    fetchAllPairsData();
+  }, [fetchAllPairsData]);
+
+  // Smooth timer for data progression
+  useEffect(() => {
+    if (timerRef.current) {
+      clearInterval(timerRef.current);
+    }
+
+    timerRef.current = setInterval(() => {
+      progressToNextDataPoint();
     }, 1000);
 
     return () => {
@@ -229,17 +303,7 @@ export function OhlcvProvider({ children }: { children: ReactNode }) {
         clearInterval(timerRef.current);
       }
     };
-  }, [timeframe, moveToNextWindow]);
-
-  // Auto-refresh data periodically (every 5 minutes)
-  useEffect(() => {
-    const refreshInterval = setInterval(() => {
-      console.log('[OHLCV] Auto-refreshing all pairs data');
-      fetchAllPairsData();
-    }, 5 * 60 * 1000); // 5 minutes
-
-    return () => clearInterval(refreshInterval);
-  }, [fetchAllPairsData]);
+  }, [progressToNextDataPoint]);
 
   const contextValue: OhlcvContextType = {
     pairsData,
@@ -265,7 +329,7 @@ export function useOhlcv() {
   return context;
 }
 
-// Helper hook for individual pair data
+// Updated hook for individual pair data
 export function usePairData(pair: string) {
   const { pairsData, refreshPair } = useOhlcv();
   const pairData = pairsData[pair] || {
@@ -274,12 +338,22 @@ export function usePairData(pair: string) {
     currentIndex: 0,
     countdown: 60,
     isLoading: true,
-    error: null
+    error: null,
+    allLoadedData: [],
+    totalAvailable: 0,
+    hasMoreData: true
   };
 
   return {
     ...pairData,
     refresh: () => refreshPair(pair),
-    currentData: pairData.data[pairData.currentIndex] || null
+    currentData: pairData.allLoadedData[pairData.currentIndex] || null,
+    progress: pairData.totalAvailable > 0 
+      ? (pairData.currentIndex / pairData.totalAvailable) * 100 
+      : 0,
+    // Helper properties
+    pointsLoaded: pairData.allLoadedData.length,
+    pointsRemaining: pairData.allLoadedData.length - pairData.currentIndex,
+    canProgress: pairData.currentIndex < pairData.allLoadedData.length - 1
   };
 }
